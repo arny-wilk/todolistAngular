@@ -1,0 +1,16 @@
+li {
+    text-align: left;
+  }
+  
+  .todos {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+  
+  .todo     {
+    display: flex;
+  }
+  
+  .todo span.done {
+    text-decoration: line-through;
+  }

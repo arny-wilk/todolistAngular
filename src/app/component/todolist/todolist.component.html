@@ -1,17 +1,32 @@
 <p>todolist works!</p>
 
 <form (ngSubmit)="onSubmit(todo)">
-  <label for="todo">Todo : </label>
-  <input type="text" id="todo" name="todo" [(ngModel)]="todo" required />
+  <label for="todo.desc">Todo : </label>
+  <input
+    type="text"
+    id="todo.desc"
+    name="todo.desc"
+    [(ngModel)]="todo.desc"
+    required
+  />
   <button type="submit">Ajouter</button>
 </form>
 
-<ul>
-  <li *ngFor="let task of taskList; index as i">
-      Tache {{ i + 1 }} : {{ task }}
-      <!-- <button type="submit" *ngIf>Modifier</button> -->
-      <form (ngSubmit)="onDelete()">
-        <button type="submit">Supprimer</button>
+<ul class="todos">
+  <li class="todo" *ngFor="let todo of todos; index as i">
+    <span [class.done]="todo.done">Tache {{ i + 1 }} : {{ todo.desc }} </span>
+      <input type="checkbox" (click)="isDone(todo)" />
+    <form (ngSubmit)="updateTask(todo, newtodo)">
+      <input
+        type="text"
+        id="newtodo"
+        name="newtodo"
+        [(ngModel)]="newtodo.desc"
+      />
+      <button type="submit">Modifier</button>
+    </form>
+    <form (ngSubmit)="onDelete()">
+      <button type="submit">Supprimer</button>
     </form>
   </li>
 </ul>

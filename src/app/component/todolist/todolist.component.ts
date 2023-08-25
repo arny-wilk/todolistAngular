@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Todo } from 'src/app/shared/models/todo';
 
 @Component({
   selector: 'app-todolist',
@@ -6,23 +7,40 @@ import { Component } from '@angular/core';
   styleUrls: ['./todolist.component.css'],
 })
 export class TodolistComponent {
-  todo: string = 'se reveiller';
+  todo: Todo = { desc: 'se reveiller', done: false };
+  newtodo: Todo = { desc: 'change', done: false };
 
-  taskList: string[] = ['manger', 'coder', 'faire les courses', 'dormir'];
+  todos: Todo[] = [
+    new Todo('Faire la vaiselle'),
+    new Todo('Faire le menage', true),
+    new Todo('Faire les courses'),
+  ];
 
-  onSubmit(todo: string) {
-    this.taskList.push(todo);
-    console.log(`We addd the todo in the list : `, this.taskList);
+  isDone(todo: Todo) {
+    if (this.todos.includes(todo)) {
+      todo.done = !todo.done;
+    }
+    console.log(`change is Done: `, todo.done);
   }
 
-  updateTask(newTodo: string, todo: string) {
-    if (this.taskList.includes(todo)) {
-      newTodo = todo;
+  onSubmit(todo: Todo) {
+    this.todos.push(todo);
+    console.log(`We addd the todo in the list : `, this.todos);
+  }
+
+  updateTask(todo: Todo, newtodo: Todo) {
+    let index = this.todos.indexOf(todo);
+
+    if (index !== -1) {
+      this.todos[index].desc = newtodo.desc;
     }
+
+    console.log(`Replace the actual todo with newTodo : `, todo);
+    console.log(`change in Array ? `, this.todos);
   }
 
   onDelete() {
-     this.taskList.pop();
-    console.log(`${this.taskList}`);
+    this.todos.pop();
+    console.log(`${this.todos}`);
   }
 }
