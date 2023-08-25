@@ -28,19 +28,23 @@ export class TodolistComponent {
   }
 
   onDelete(todo: Todo) {
-    let newTaskList: Todo[] = [];
+    // this.todos.splice(this.todos.indexOf(todo), 1);
 
-    for (let i = 0; i < this.todos.indexOf(todo); i++) {
-      newTaskList.push(this.todos[i]);
+    if (
+      this.todos.indexOf(todo) !== 0 ||
+      this.todos.indexOf(todo) !== this.todos.length
+    ) {
+      for (let i = this.todos.indexOf(todo) + 1; i < this.todos.length; i++) {
+        this.todos[i - 1] = this.todos[i];
+      }
+      this.todos.pop();
     }
 
-    for (let i = this.todos.indexOf(todo) + 1; i < newTaskList.length; i++) {
-      newTaskList.push(this.todos[i]);
+    if (this.todos.indexOf(todo) === 0) {
+      this.todos.shift();
     }
-
-    this.todos = newTaskList;
-    for (let task of newTaskList) {
-      console.log(`${task.desc}`);
+    if (this.todos.indexOf(todo) === this.todos.length) {
+      this.todos.pop();
     }
   }
 }

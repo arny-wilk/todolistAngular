@@ -15,17 +15,13 @@
 <ul class="todos">
   <li class="todo" *ngFor="let todo of todos; index as i">
     <span [class.done]="todo.done">Tache {{ i + 1 }} : {{ todo.desc }} </span>
-      <input type="checkbox" (click)="isDone(todo)" />
-      <button (click)="todo.updating = !todo.updating" > {{ todo.updating ? "Enregistrer" : "Modifier" }} </button>
-      <div *ngIf="todo.updating">
-        <input 
-          type="text"
-          name="todo"
-          [(ngModel)]="todo.desc"
-        />
-      </div>
-    <form (ngSubmit)="onDelete(todo)">
-      <button type="submit">Supprimer</button>
-    </form>
+    <input type="checkbox" (click)="isDone(todo)" />
+    <button (click)="todo.updating = !todo.updating">
+      {{ todo.updating ? "Enregistrer" : "Modifier" }}
+    </button>
+    <div *ngIf="todo.updating">
+      <input type="text" name="todo" [(ngModel)]="todo.desc" />
+    </div>
+      <button type="submit" (click)="onDelete(todo)">Supprimer</button>
   </li>
 </ul>
