@@ -7,12 +7,11 @@ import { Todo } from 'src/app/shared/models/todo';
   styleUrls: ['./todolist.component.css'],
 })
 export class TodolistComponent {
-  todo: Todo = { desc: 'se reveiller', done: false };
-  newtodo: Todo = { desc: 'change', done: false };
+  todo: Todo = { desc: 'se reveiller', done: false, updating: false };
 
   todos: Todo[] = [
     new Todo('Faire la vaiselle'),
-    new Todo('Faire le menage', true),
+    new Todo('Faire le menage'),
     new Todo('Faire les courses'),
   ];
 
@@ -28,19 +27,20 @@ export class TodolistComponent {
     console.log(`We addd the todo in the list : `, this.todos);
   }
 
-  updateTask(todo: Todo, newtodo: Todo) {
-    let index = this.todos.indexOf(todo);
+  onDelete(todo: Todo) {
+    let newTaskList: Todo[] = [];
 
-    if (index !== -1) {
-      this.todos[index].desc = newtodo.desc;
+    for (let i = 0; i < this.todos.indexOf(todo); i++) {
+      newTaskList.push(this.todos[i]);
     }
 
-    console.log(`Replace the actual todo with newTodo : `, todo);
-    console.log(`change in Array ? `, this.todos);
-  }
+    for (let i = this.todos.indexOf(todo) + 1; i < newTaskList.length; i++) {
+      newTaskList.push(this.todos[i]);
+    }
 
-  onDelete() {
-    this.todos.pop();
-    console.log(`${this.todos}`);
+    this.todos = newTaskList;
+    for (let task of newTaskList) {
+      console.log(`${task.desc}`);
+    }
   }
 }
