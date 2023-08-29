@@ -6,6 +6,12 @@ li {
     display: flex;
     flex-flow: column nowrap;
   }
+
+  .error {
+    color: red;
+    font-size: 0.8rem;
+  }
+
   
   .todo     {
     display: flex;
