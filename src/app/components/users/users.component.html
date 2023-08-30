@@ -1,0 +1,43 @@
+<h1>Liste des utilisateurs</h1>
+<form (submit)="createUser()">
+  <input
+    type="text"
+    name="lastname"
+    autocomplete="off"
+    [(ngModel)]="newUser.lastname"
+    placeholder="Nom de famille"
+  />
+  <input
+    type="text"
+    name="firstname"
+    autocomplete="off"
+    [(ngModel)]="newUser.firstname"
+    placeholder="Prénom"
+  />
+  <input
+    type="email"
+    name="email"
+    autocomplete="off"
+    [(ngModel)]="newUser.email"
+    placeholder="Nom de famille"
+  />
+  <button type="submit">Go!</button>
+</form>
+
+<ul *ngFor="let user of users">
+  <li>{{ user.firstname }}</li>
+  <li>{{ user.lastname}}</li>
+  <li>{{ user.email}}</li>
+  <button (click)="selected = user" (click)="show = !show">Modifier</button>
+  <button (click)="selected = user" (click)="deleteUser()" >Supprimer</button>
+</ul>
+  
+  <ul *ngIf="show && selected">
+     <form (submit)="updateUser()" >
+        <input type="text" name="selected.firstname" [(ngModel)]="selected.firstname" />
+        <input type="text" name="selected.lastname" [(ngModel)]="selected.lastname" />
+        <input type="text" name="selected.email" [(ngModel)]="selected.email" />
+        <button type="submit">Soumettre</button>
+    </form>
+    </ul>
+    
