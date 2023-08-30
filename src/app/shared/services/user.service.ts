@@ -1,30 +1,36 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Services } from './services';
+import { User } from '../models/user';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  private _baseUrl = 'http://localhost:3000/users';
+  private _baseUrl = environment.urlApi.users
 
   constructor(private _http: HttpClient) {
     this.findAll();
   }
 
   public findAll() {
-    this._http.get(this._baseUrl).subscribe((users) => {
-      console.log(`data : `, users);
-    });
+  return  this._http.get<User[]>(this._baseUrl);
+
   }
 
   public findById(id: string) {
-    this._http.get(this._baseUrl + `/${id}`).subscribe((user) => {
-      console.log(`user : `, user);
-    });
+    return this._http.get<User>(this._baseUrl + `/${id}`);
   }
 
-  public create() {}
+  public create(created: User) {
+    return this._http.post(this._baseUrl, created);
+  }
 
-  public update() {}
+  public update(updated: User) {
+    return this._http.put(this._baseUrl + `/${updated.id}`, updated)
+  }
 
-  public delete() {}
+  public delete(user: User) {
+   return this._http
+      .delete(this._baseUrl + `/${user.id}`)
+  }
 }
