@@ -40,13 +40,19 @@ export class UsersComponent implements OnInit {
 
   updateUser() {
     if (this.selected) {
-      this._userService.update(this.selected).subscribe(() => this._init());
+      this._userService.update(this.selected).subscribe(() => {
+        this.selected = null;
+        this._init();
+      });
     }
   }
 
   deleteUser() {
     if (this.selected) {
-      this._userService.delete(this.selected).subscribe(() => this._init());
+      this._userService.delete(this.selected).subscribe(() => {
+        this.selected = null;
+        this._init();
+      });
     }
   }
 }
