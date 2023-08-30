@@ -18,7 +18,10 @@ public findAll() {
   ];
 }
 
-public findById(id: string) {}
+public findById(id: string) {
+  return this.todos.at(parseInt(id));
+}
+
 public create(todo: TodosComponent) {}
 public update(updated: TodosComponent) {}
 public delete(id: string) {}

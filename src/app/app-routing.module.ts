@@ -4,8 +4,8 @@ import { PresentationComponent } from "./components/presentation/presentation.co
 
 
 const routes: Routes = [
-    {path: 'todos', component: PresentationComponent},
-    { path: '', redirectTo: 'todos', pathMatch: 'full'},
+    {path: 'todolist', component: PresentationComponent},
+    { path: '', redirectTo: 'todolist', pathMatch: 'full'},
     { path: '**', redirectTo: 'todos' },
 ];
 
