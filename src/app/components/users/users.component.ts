@@ -12,7 +12,7 @@ export class UsersComponent implements OnInit {
 
   userId!: string;
 
-  selected!: User;
+  selected: User | null = null;
 
   show: boolean = false;
 
@@ -39,10 +39,14 @@ export class UsersComponent implements OnInit {
   }
 
   updateUser() {
-    this._userService.update(this.selected).subscribe(() => this._init());
-}
+    if (this.selected) {
+      this._userService.update(this.selected).subscribe(() => this._init());
+    }
+  }
 
-deleteUser() {
-  this._userService.delete(this.selected).subscribe(() => this._init());
+  deleteUser() {
+    if (this.selected) {
+      this._userService.delete(this.selected).subscribe(() => this._init());
+    }
   }
 }

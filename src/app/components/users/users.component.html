@@ -28,7 +28,7 @@
   <li>{{ user.firstname }}</li>
   <li>{{ user.lastname}}</li>
   <li>{{ user.email}}</li>
-  <button (click)="show = !show" (click)="selected = user">Modifier</button>
+  <button (click)="selected = user" (click)="show = !show">Modifier</button>
   <button (click)="selected = user" (click)="deleteUser()" >Supprimer</button>
 </ul>
   
