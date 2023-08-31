@@ -3,7 +3,7 @@ import { TodosComponent } from "src/app/components/todos/todos.component";
 import { Todo } from "../models/todo";
 import { User } from "../models/user";
 
-@Injectable( { providedIn: 'root' } )
+//@Injectable( { providedIn: 'root' } )
 export class Services {
 
     get todos(): Todo[] {

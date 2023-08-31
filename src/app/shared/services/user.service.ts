@@ -33,14 +33,12 @@ export class UserService {
   }
 
   public findTodosByUser(user: User) {
-    const arrayBufferView = this.convertToArrayBufferView(user.todos);
-    const hashed = this.hashed(arrayBufferView);
+    const hashed = this.hashed(this.convertToArrayBufferView(user.todos));
     return this._http.get(this._baseUrl + `/${user.id}/${hashed}`);
 }
 
   public findTodoByUser(user: User, todo: Todo[]) {
-    const arrayBufferView = this.convertToArrayBufferView(todo);
-    const hashed = this.hashed(arrayBufferView);
+    const hashed = this.hashed(this.convertToArrayBufferView(todo));
     return this._http.get(
       this._baseUrl +
         `/${user.id}` +
@@ -49,8 +47,7 @@ export class UserService {
   }
 
   public createTodo(user: User, createTodo: Todo[]) {
-    const arrayBufferView = this.convertToArrayBufferView(createTodo);
-    const hashed = this.hashed(arrayBufferView);
+    const hashed = this.hashed(this.convertToArrayBufferView(createTodo));
     return this._http.post(
       this._baseUrl +
         `${user.id}` +
@@ -60,8 +57,7 @@ export class UserService {
   }
 
   public updateTodo(user: User, updatedTodo: Todo[]) {
-    const arrayBufferView = this.convertToArrayBufferView(updatedTodo);
-    const hashed = this.hashed(arrayBufferView);
+    const hashed = this.hashed(this.convertToArrayBufferView(updatedTodo));
     return this._http.put(
       this._baseUrl +
         `/${user.id}` +
@@ -78,8 +74,7 @@ export class UserService {
   }
 
   public deleteAllTodos(user: User, deleteAllTodos: Todo[] ) {
-    const arrayBufferView = this.convertToArrayBufferView(deleteAllTodos);
-    const hashed = this.hashed(arrayBufferView);
+    const hashed = this.hashed(this.convertToArrayBufferView(deleteAllTodos));
     return this._http.delete(
       this._baseUrl +
         `/${user.id}` +
