@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Services } from './todos.service';
 import { User } from '../models/user';
 import { environment } from 'src/environments/environment.development';
+import { Todo } from '../models/todo';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -36,45 +37,44 @@ export class UserService {
     return this._http.get(this._baseUrl + `/${user.id}/todos`);
 }
 
-  public findTodoByUser(user: User, id: string) {
+  public findTodoByUser(user: User, todo: Todo[]) {
     return this._http.get(
       this._baseUrl +
         `/${user.id}` +
-        `?todos=${user.todos.findIndex(obj => obj.id === id)}`
+        `?todos=${user.todos === todo ? true : false}`
     );
   }
 
-  public createTodo(createTodo: User, id: string) {
+  public createTodo(user: User, createTodo: Todo[]) {
     return this._http.post(
       this._baseUrl +
-        `${createTodo.id}` +
-        `?todo=${createTodo.todos.findIndex((obj) => obj.id === id)}`,
+        `${user.id}` +
+        `?todo=${user.todos === createTodo ? true : false}`,
       createTodo
     );
   }
 
-  public updateTodo(updatedTodo: User, id: string) {
-    return this._http.patch(
+  public updateTodo(user: User, updatedTodo: Todo[]) {
+    return this._http.put(
       this._baseUrl +
-        `/${updatedTodo.id}` +
-        `?udpated=${updatedTodo.todos.findIndex((todo) => todo.id === id)}`,
+        `/${user.id}` +
+        `?udpated=${user.todos === updatedTodo ? true : false}`,
       updatedTodo
     );
   }
 
-  public deleteTodoById(deleteTodo: User, id: string) {
+  public deleteTodoById(id: string) {
     return this._http.delete(
       this._baseUrl +
-        `/${deleteTodo.id}` +
-        `?deleteTodo=${deleteTodo.todos.findIndex((todo) => todo.id === id)}`
+        `/${id}`
     );
   }
 
-  public deleteAllTodos(deleteAllTodos: User) {
+  public deleteAllTodos(user: User, deleteAllTodos: Todo[] ) {
     return this._http.delete(
       this._baseUrl +
-        `/${deleteAllTodos.id}` +
-        `?deleteAll=${deleteAllTodos.todos}`
+        `/${user.id}` +
+        `?deleteAll=${deleteAllTodos}`
     );
   }
 }

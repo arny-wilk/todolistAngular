@@ -19,10 +19,20 @@ export class UsersComponent implements OnInit {
     firstname: '',
     lastname: '',
     email: '',
-    todos: []
+    todos: [],
   };
 
+  todoId!: string;
   selectedTodos!: Todo[];
+
+  newTodo: Todo = {
+    id: uuidv4(),
+    category: '',
+    desc: '',
+    done: false,
+    updating: false,
+    details: '',
+  };
 
   constructor(private _userService: UserService) {}
 
@@ -57,4 +67,57 @@ export class UsersComponent implements OnInit {
       });
     }
   }
+
+  createTodoUser() {
+    if (this.selected && this.newTodo) {
+      this.selectedTodos.push(this.newTodo);
+      this._userService
+        .createTodo(this.selected, this.selectedTodos)
+        .subscribe(() => {
+          this.newTodo = {
+            id: uuidv4(),
+            category: '',
+            desc: '',
+            done: false,
+            updating: false,
+            details: '',
+          };
+          this._init();
+        });
+    }
+  }
+
+  updateTodoUser() {
+    if (this.selected && this.selectedTodos) {
+      this._userService
+        .updateTodo(this.selected, this.selectedTodos)
+        .subscribe(() => {
+          this.selectedTodos = [];
+          this._init();
+        });
+    }
+  }
+
+  deleteByTodoUser() {
+    if (this.selected && this.todoId) {
+      this._userService
+        .deleteTodoById(this.todoId)
+        .subscribe(() => this._init());
+    }
+  }
+
+  deleteTodosUser() {
+    if (this.selected && this.selectedTodos) {
+      this._userService
+        .deleteAllTodos(this.selected, this.selectedTodos)
+        .subscribe(() => {
+          this.selectedTodos = [];
+          this._init();
+        });
+    }
+  }
+}
+
+function uuidv4(): string {
+  return window.crypto.randomUUID();
 }
