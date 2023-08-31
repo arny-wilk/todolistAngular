@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Todo } from 'src/app/shared/models/todo';
 import { User } from 'src/app/shared/models/user';
 import { UserService } from 'src/app/shared/services/user.service';
 
@@ -9,9 +10,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class UsersComponent implements OnInit {
   users: User[] = [];
-
   userId!: string;
-
   selected: User | null = null;
 
   show: boolean = false;
@@ -20,7 +19,10 @@ export class UsersComponent implements OnInit {
     firstname: '',
     lastname: '',
     email: '',
+    todos: []
   };
+
+  selectedTodos!: Todo[];
 
   constructor(private _userService: UserService) {}
 
