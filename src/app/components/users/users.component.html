@@ -1,3 +1,14 @@
+<!-- MEMO POUR PLUS TARD -->
+<!-- <button (click)="todo.updating = !todo.updating" > {{ todo.updating ? "Enregistrer" : "Modifier" }} </button>
+<div *ngif="todo.updating === true">
+<input
+   type="text"
+  name="todo"
+  [(ngmodel)]="todo.desc"
+/>
+</div> -->
+
+
 <h1>Liste des utilisateurs</h1>
 <form (submit)="createUser()">
   <input
@@ -24,25 +35,29 @@
   <button type="submit">Go!</button>
 </form>
 
-<ul *ngFor="let user of users">
+<ul *ngFor="let user of users; last as l">
   <li>Prenom: {{ user.firstname }} </li>
   <li>Nom:  {{ user.lastname}}</li>
-  <li>Mail: {{ user.email}}</li>
-  <ul *ngFor="let todo of user.todos">
-    <li>Categorie: {{ todo.category | uppercase }}</li>
-    <li>Description: {{ todo.desc | uppercase }}</li>
-    <li><input type="checkbox" name="todo.done" />Fait</li>
-    <li><input type="checkbox" name="todo.updating" />Mis à jour</li>
-    <li>Description: <textarea>{{ todo.details }}</textarea></li>
-  </ul>
-  <button (click)="newTodo" (click)="selected = user"  (click)="show = !show">Ajouter une Todo</button>
-  <button (click)="selectedTodos = user.todos" (click)="selected = user" (click)="show = !show">Modifier la Todo</button>
-  <button (click)="selectedTodos = user.todos" (click)="selected = user" (click)="deleteTodosUser()">Supprimer toute la liste</button>
-  <button (click)="selected = user" (click)="show = !show">Modifier Utilisateur</button>
+  <li>Mail: {{ user.email }}</li>
+  <button (click)="showTodo = !showTodo" >{{ showTodo ? "Cacher les taches" : " Montrer les taches" }}</button>
+  <button (click)="selected = user" (click)="showUpdateUser = !showUpdateUser">Modifier Utilisateur</button>
   <button (click)="selected = user" (click)="deleteUser()" >Supprimer Utilisateur</button>
-</ul>
   
-<ul *ngIf="show && selected">
+  <div *ngIf="showTodo && l" >
+    <ul *ngFor="let todo of user.todos">
+      <li>Categorie: {{ todo.category | uppercase }}</li>
+      <li>Description: {{ todo.desc | uppercase }}</li>
+      <li><input type="checkbox" name="todo.done" />Fait</li>
+      <li><input type="checkbox" name="todo.updating" />Mis à jour</li>
+      <li>Description: <textarea>{{ todo.details }}</textarea></li>
+    </ul>
+    <button (click)="newTodo" (click)="selected = user"  (click)="show = !show">Ajouter une Todo</button>
+    <button (click)="selectedTodos = user.todos" (click)="selected = user" (click)="showUpdateTodo = !showUpdateTodo">Modifier la Todo</button>
+    <button (click)="selectedTodos = user.todos" (click)="selected = user" (click)="deleteTodosUser()">Supprimer toute la liste</button>
+  </div>
+</ul>
+
+<ul *ngIf="showUpdateUser && selected">
     <form (submit)="updateUser()" >
     <input type="text" name="selected.firstname" [(ngModel)]="selected.firstname" />
     <input type="text" name="selected.lastname" [(ngModel)]="selected.lastname" />
@@ -63,7 +78,7 @@
 </ul>
 
 
-<ul *ngIf="show && selected &&  selectedTodos" >
+<ul *ngIf="showUpdateTodo && selected &&  selectedTodos" >
   <form *ngFor="let todo of selectedTodos"  (submit)="updateTodoUser()">
     <input type="text" name="todo.category" [(ngModel)]="todo.category" />
     <input type="text" name="todo.desc" [(ngModel)]="todo.desc" />

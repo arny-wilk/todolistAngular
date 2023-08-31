@@ -13,7 +13,10 @@ export class UsersComponent implements OnInit {
   userId!: string;
   selected: User | null = null;
 
+  showTodo: boolean = false;
   show: boolean = false;
+  showUpdateUser: boolean = false;
+  showUpdateTodo: boolean = false;
 
   newUser: User = {
     firstname: '',
@@ -34,18 +37,19 @@ export class UsersComponent implements OnInit {
     details: '',
   };
 
+  
   constructor(private _userService: UserService) {}
-
+  
   ngOnInit(): void {
     this._init();
   }
-
+  
   private _init() {
     this._userService
-      .findAll()
-      .subscribe((userReceived) => (this.users = userReceived));
+    .findAll()
+    .subscribe((userReceived) => (this.users = userReceived));
   }
-
+  
   createUser() {
     this._userService.create(this.newUser).subscribe(() => this._init());
   }

@@ -33,12 +33,14 @@ export class UserService {
   }
 
   public findTodosByUser(user: User) {
-    const hashed = this.hashed(user.todos);
+    const arrayBufferView = this.convertToArrayBufferView(user.todos);
+    const hashed = this.hashed(arrayBufferView);
     return this._http.get(this._baseUrl + `/${user.id}/${hashed}`);
 }
 
   public findTodoByUser(user: User, todo: Todo[]) {
-    const hashed = this.hashed(todo);
+    const arrayBufferView = this.convertToArrayBufferView(todo);
+    const hashed = this.hashed(arrayBufferView);
     return this._http.get(
       this._baseUrl +
         `/${user.id}` +
@@ -47,7 +49,8 @@ export class UserService {
   }
 
   public createTodo(user: User, createTodo: Todo[]) {
-    const hashed = this.hashed(createTodo);
+    const arrayBufferView = this.convertToArrayBufferView(createTodo);
+    const hashed = this.hashed(arrayBufferView);
     return this._http.post(
       this._baseUrl +
         `${user.id}` +
@@ -57,7 +60,8 @@ export class UserService {
   }
 
   public updateTodo(user: User, updatedTodo: Todo[]) {
-    const hashed = this.hashed(updatedTodo);
+    const arrayBufferView = this.convertToArrayBufferView(updatedTodo);
+    const hashed = this.hashed(arrayBufferView);
     return this._http.put(
       this._baseUrl +
         `/${user.id}` +
@@ -74,7 +78,8 @@ export class UserService {
   }
 
   public deleteAllTodos(user: User, deleteAllTodos: Todo[] ) {
-    const hashed = this.hashed(deleteAllTodos);
+    const arrayBufferView = this.convertToArrayBufferView(deleteAllTodos);
+    const hashed = this.hashed(arrayBufferView);
     return this._http.delete(
       this._baseUrl +
         `/${user.id}` +
@@ -82,7 +87,12 @@ export class UserService {
     );
 }
 
-public hashed(variable: any) {
+public convertToArrayBufferView(arr: Array<any>) {
+  const arrayBuffer = new ArrayBuffer(arr.length);
+  return new Uint8Array(arrayBuffer);
+}
+
+public hashed(variable: ArrayBufferView) {
   return window.crypto.getRandomValues(variable);
 }
 }
