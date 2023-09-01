@@ -27,24 +27,7 @@
       "firstname": "PEDRO",
       "lastname": "pedro",
       "email": "pedro@gmail.com",
-      "todos": [
-        {
-          "id": "b09bb77f-adc0-4d0a-8a2b-9ec25f1d78b8",
-          "category": "Education",
-          "desc": "React",
-          "done": false,
-          "updating": false,
-          "details": "pratiquer React"
-        },
-        {
-          "id": "4c24ac1c-04e1-48c9-9364-7d3ce19f3558",
-          "category": "QUOTIDIEN",
-          "desc": "faire les courses",
-          "done": false,
-          "updating": false,
-          "details": "survie"
-        }
-      ],
+      "todos": [],
       "id": "d5RVg10"
     }
   ]

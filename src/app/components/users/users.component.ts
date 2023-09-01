@@ -104,20 +104,40 @@ export class UsersComponent implements OnInit {
   deleteByTodoUser() {
     if (this.selected && this.todoId) {
       this._userService
-        .deleteTodoById(this.todoId)
+        .deleteTodoById(this.selected)
         .subscribe(() => this._init());
     }
   }
 
   deleteTodosUser() {
-    if (this.selected && this.selectedTodos) {
+    if (this.selected) {
+      this.selected.todos = [];
       this._userService
-        .deleteAllTodos(this.selected, this.selectedTodos)
+        .deleteAllTodos(this.selected)
         .subscribe(() => {
           this.selectedTodos = [];
           this._init();
         });
     }
+  }
+}
+
+function onDelete(todos: Todo[], todo: Todo) {
+  // this.todos.splice(this.todos.indexOf(todo), 1);
+  if (
+    todos.indexOf(todo) !== 0 ||
+    todos.indexOf(todo) !== todos.length
+  ) {
+    for (let i = todos.indexOf(todo) + 1; i < todos.length; i++) {
+      todos[i - 1] = todos[i];
+    }
+    todos.pop();
+  }
+  if (todos.indexOf(todo) === 0) {
+    todos.shift();
+  }
+  if (todos.indexOf(todo) === todos.length) {
+    todos.pop();
   }
 }
 

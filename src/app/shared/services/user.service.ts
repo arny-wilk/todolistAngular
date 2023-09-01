@@ -19,68 +19,60 @@ export class UserService {
   public findById(id: string) {
     return this._http.get<User>(this._baseUrl + `/${id}`);
   }
-  
+
   public create(created: User) {
     return this._http.post(this._baseUrl, created);
   }
-  
+
   public update(updated: User) {
     return this._http.put(this._baseUrl + `/${updated.id}`, updated);
   }
-  
+
   public delete(user: User) {
     return this._http.delete(this._baseUrl + `/${user.id}`);
   }
-  
+
   public findTodosByUser(user: User) {
     return this._http.get(this._baseUrl + `/${user.id}/${user.todos.length}`);
-}
+  }
 
   public findTodoByUser(user: User, id: string) {
-    return this._http.get(
-      this._baseUrl +
-        `/${user.id}` +
-        `?todos=${id}`
-    );
+    return this._http.get(this._baseUrl + `/${user.id}` + `?todos=${id}`);
   }
 
   public createTodo(user: User) {
+    return this._http.put(this._baseUrl + `/${user.id}`, user);
+  }
+
+  public updateTodo(user: User) {
     return this._http.put(
-      this._baseUrl + `/${user.id}`, 
+      this._baseUrl + `/${user.id}` + `?todos=${window.crypto.randomUUID()}`,
       user
     );
   }
 
-  public updateTodo(user: User) {
-  const hashed = this.hashed(this.convertToArrayBufferView([user].length))
+  public deleteTodoById(user: User) {
     return this._http.put(
-      this._baseUrl + `/${user.id}` + `?todos=${hashed}`, 
-        user
+      this._baseUrl + `/${user.id}` + `?todos=${window.crypto.randomUUID()}`,
+      user
     );
   }
 
-  public deleteTodoById(id: string) {
-    return this._http.delete(
-      this._baseUrl +
-        `/${id}`
-    );
-  }
-
-  public deleteAllTodos(user: User, deleteAllTodos: Todo[] ) {
-    return this._http.delete(
+  public deleteAllTodos(user: User) {
+    return this._http.put(
       this._baseUrl +
         `/${user.id}` +
-        `?deleteAll=${deleteAllTodos.toString()}`
+        `?deleteAllTodos=${window.crypto.randomUUID()}`,
+      user
     );
-}
+  }
 
+  public hashed(variable: ArrayBufferView) {
+    return window.crypto.getRandomValues(variable);
+  }
 
-public hashed(variable: ArrayBufferView) {
-  return window.crypto.getRandomValues(variable);
-}
-
-public convertToArrayBufferView(variable: number) {
-  const arrayBuffer = new ArrayBuffer(variable)
-  return new Uint8Array(arrayBuffer);
-}
+  public convertToArrayBufferView(variable: number) {
+    const arrayBuffer = new ArrayBuffer(variable);
+    return new Uint8Array(arrayBuffer);
+  }
 }
