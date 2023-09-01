@@ -7,17 +7,10 @@ import { Services } from 'src/app/shared/services/todos.service';
   templateUrl: './todos.component.html',
   styleUrls: ['./todos.component.css'],
 })
-export class TodosComponent implements OnInit {
+export class TodosComponent {
 
   todos: Todo[] = [];
 
   selected!: Todo;
-
-
-  constructor(private _todosService: Services) {}
-
-  ngOnInit(): void {
-    this.todos = this._todosService.todos;
-  }
   
 }

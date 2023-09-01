@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Todo } from 'src/app/shared/models/todo';
 import { User } from 'src/app/shared/models/user';
 import { UserService } from 'src/app/shared/services/user.service';
@@ -28,7 +28,7 @@ export class UsersComponent implements OnInit {
   todoId!: string;
   selectedTodos!: Todo[];
 
-  newTodo: Todo = {
+  @Input() newTodo: Todo = {
     id: uuidv4(),
     category: '',
     desc: '',
@@ -37,19 +37,18 @@ export class UsersComponent implements OnInit {
     details: '',
   };
 
-  
   constructor(private _userService: UserService) {}
-  
+
   ngOnInit(): void {
     this._init();
   }
-  
+
   private _init() {
     this._userService
-    .findAll()
-    .subscribe((userReceived) => (this.users = userReceived));
+      .findAll()
+      .subscribe((userReceived) => (this.users = userReceived));
   }
-  
+
   createUser() {
     this._userService.create(this.newUser).subscribe(() => this._init());
   }
@@ -73,10 +72,10 @@ export class UsersComponent implements OnInit {
   }
 
   createTodoUser() {
-    if (this.selected && this.newTodo) {
-      this.selectedTodos.push(this.newTodo);
+    if (this.show && this.selected && this.newTodo) {
+      this.selected.todos.push(this.newTodo);
       this._userService
-        .createTodo(this.selected, this.selectedTodos)
+        .createTodo(this.selected)
         .subscribe(() => {
           this.newTodo = {
             id: uuidv4(),
@@ -94,7 +93,7 @@ export class UsersComponent implements OnInit {
   updateTodoUser() {
     if (this.selected && this.selectedTodos) {
       this._userService
-        .updateTodo(this.selected, this.selectedTodos)
+        .updateTodo(this.selected)
         .subscribe(() => {
           this.selectedTodos = [];
           this._init();

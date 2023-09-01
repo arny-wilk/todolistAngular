@@ -17,52 +17,35 @@
       ]
     },
     {
-      "id": "618e479d-0a2b-429a-9806-0034a8c7883a",
-      "firstname": "Jaco",
-      "lastname": "JACO",
-      "email": "jaco@mail.fr",
-      "todos": [
-        {
-          "id": "1",
-          "category": "quotidien",
-          "desc": "Faire les course",
-          "done": false,
-          "updating": false,
-          "details": "Il faut manger"
-        }
-      ]
-    },
-    {
-      "id": "e2c2cb6f-cea0-4785-8967-4086cd834ec8",
-      "firstname": "Pedro",
-      "lastname": "PEDRO",
-      "email": "pedro@mail.fr",
-      "todos": [
-        {
-          "id": "1",
-          "desc": "Faire les course",
-          "category": "quotidien",
-          "done": false,
-          "updating": false,
-          "details": "Il faut manger"
-        }
-      ]
-    },
-    {
-      "id": "278I_fz",
       "firstname": "TATA",
       "lastname": "tata",
       "email": "tata@gmail.com",
+      "todos": [],
+      "id": "ewVFm98"
+    },
+    {
+      "firstname": "PEDRO",
+      "lastname": "pedro",
+      "email": "pedro@gmail.com",
       "todos": [
         {
-          "id": "1",
-          "desc": "Faire les course",
-          "category": "quotidien",
+          "id": "b09bb77f-adc0-4d0a-8a2b-9ec25f1d78b8",
+          "category": "Education",
+          "desc": "React",
           "done": false,
           "updating": false,
-          "details": "Il faut manger"
+          "details": "pratiquer React"
+        },
+        {
+          "id": "4c24ac1c-04e1-48c9-9364-7d3ce19f3558",
+          "category": "QUOTIDIEN",
+          "desc": "faire les courses",
+          "done": false,
+          "updating": false,
+          "details": "survie"
         }
-      ]
+      ],
+      "id": "d5RVg10"
     }
   ]
 }

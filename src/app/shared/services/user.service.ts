@@ -19,50 +19,43 @@ export class UserService {
   public findById(id: string) {
     return this._http.get<User>(this._baseUrl + `/${id}`);
   }
-
+  
   public create(created: User) {
     return this._http.post(this._baseUrl, created);
   }
-
+  
   public update(updated: User) {
     return this._http.put(this._baseUrl + `/${updated.id}`, updated);
   }
-
+  
   public delete(user: User) {
     return this._http.delete(this._baseUrl + `/${user.id}`);
   }
-
+  
   public findTodosByUser(user: User) {
-    const hashed = this.hashed(this.convertToArrayBufferView(user.todos));
-    return this._http.get(this._baseUrl + `/${user.id}/${hashed}`);
+    return this._http.get(this._baseUrl + `/${user.id}/${user.todos.length}`);
 }
 
-  public findTodoByUser(user: User, todo: Todo[]) {
-    const hashed = this.hashed(this.convertToArrayBufferView(todo));
+  public findTodoByUser(user: User, id: string) {
     return this._http.get(
       this._baseUrl +
         `/${user.id}` +
-        `?todos=${hashed}`
+        `?todos=${id}`
     );
   }
 
-  public createTodo(user: User, createTodo: Todo[]) {
-    const hashed = this.hashed(this.convertToArrayBufferView(createTodo));
-    return this._http.post(
-      this._baseUrl +
-        `${user.id}` +
-        `?todo=${hashed}`,
-      createTodo
-    );
-  }
-
-  public updateTodo(user: User, updatedTodo: Todo[]) {
-    const hashed = this.hashed(this.convertToArrayBufferView(updatedTodo));
+  public createTodo(user: User) {
     return this._http.put(
-      this._baseUrl +
-        `/${user.id}` +
-        `?udpated=${hashed}`,
-      updatedTodo
+      this._baseUrl + `/${user.id}`, 
+      user
+    );
+  }
+
+  public updateTodo(user: User) {
+  const hashed = this.hashed(this.convertToArrayBufferView([user].length))
+    return this._http.put(
+      this._baseUrl + `/${user.id}` + `?todos=${hashed}`, 
+        user
     );
   }
 
@@ -74,20 +67,20 @@ export class UserService {
   }
 
   public deleteAllTodos(user: User, deleteAllTodos: Todo[] ) {
-    const hashed = this.hashed(this.convertToArrayBufferView(deleteAllTodos));
     return this._http.delete(
       this._baseUrl +
         `/${user.id}` +
-        `?deleteAll=${hashed}`
+        `?deleteAll=${deleteAllTodos.toString()}`
     );
 }
 
-public convertToArrayBufferView(arr: Array<any>) {
-  const arrayBuffer = new ArrayBuffer(arr.length);
-  return new Uint8Array(arrayBuffer);
-}
 
 public hashed(variable: ArrayBufferView) {
   return window.crypto.getRandomValues(variable);
+}
+
+public convertToArrayBufferView(variable: number) {
+  const arrayBuffer = new ArrayBuffer(variable)
+  return new Uint8Array(arrayBuffer);
 }
 }
