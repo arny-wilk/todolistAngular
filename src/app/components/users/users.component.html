@@ -34,6 +34,8 @@
   <button type="submit">Go!</button>
 </form>
 
+
+
 <ul *ngFor="let user of users">
   <li>Prenom: {{ user.firstname }}</li>
   <li>Nom: {{ user.lastname }}</li>
@@ -47,8 +49,9 @@
   <button (click)="selected = user" (click)="deleteUser()">
     Supprimer Utilisateur
   </button>
+  
+  <div *ngIf="showTodo" class="todos">
 
-  <div *ngIf="showTodo">
     <ul *ngFor="let todo of user.todos">
       <li>Categorie: {{ todo.category | uppercase }}</li>
       <li>Description: {{ todo.desc | uppercase }}</li>
@@ -59,26 +62,27 @@
       </li>
     </ul>
     <button
-      (click)="(newTodo)"
-      (click)="selected = user"
-      (click)="show = !show"
+    (click)="(newTodo)"
+    (click)="selected = user"
+    (click)="show = !show"
     >
-      Ajouter une Todo
-    </button>
-    <button
-      (click)="selectedTodos = user.todos"
-      (click)="selected = user"
-      (click)="showUpdateTodo = !showUpdateTodo"
-    >
-      Modifier la Todo
-    </button>
-    <button (click)="selected = user" (click)="deleteTodosUser()">
-      Supprimer toute la liste
-    </button>
-  </div>
-</ul>
+    Ajouter une Todo
+  </button>
+  <button
+  (click)="selectedTodos = user.todos"
+  (click)="selected = user"
+  (click)="showUpdateTodo = !showUpdateTodo"
+  >
+  Modifier la Todo
+</button>
+<button (click)="selected = user" (click)="deleteTodosUser()">
+  Supprimer toute la liste
+</button>
+</div>
 
-<ul *ngIf="show && selected && newTodo">
+<div class="card">
+
+<ul *ngIf="show && selected && newTodo" class="todos form" >
   <form (submit)="createTodoUser()">
     <input type="text" name="newTodo.category" [(ngModel)]="newTodo.category" />
     <input type="text" name="newTodo.desc" [(ngModel)]="newTodo.desc" />
@@ -93,6 +97,18 @@
       name="newTodo.details"
       [(ngModel)]="newTodo.details"
     />
+    <button type="submit">Soumettre</button>
+  </form>
+</ul>
+
+
+<ul *ngIf="showUpdateTodo && selected && selectedTodos">
+  <form *ngFor="let todo of selectedTodos" (submit)="updateTodoUser()">
+    <input type="text" name="todo.category" [(ngModel)]="todo.category" />
+    <input type="text" name="todo.desc" [(ngModel)]="todo.desc" />
+    <input type="checkbox" name="todo.done" [(ngModel)]="todo.done" />
+    <input type="checkbox" name="todo.updating" [(ngModel)]="todo.updating" />
+    <input type="text" name="todo.details" [(ngModel)]="todo.details" />
     <button type="submit">Soumettre</button>
   </form>
 </ul>
@@ -113,14 +129,9 @@
     <button type="submit">Soumettre</button>
   </form>
 </ul>
-
-<ul *ngIf="showUpdateTodo && selected && selectedTodos">
-  <form *ngFor="let todo of selectedTodos" (submit)="updateTodoUser()">
-    <input type="text" name="todo.category" [(ngModel)]="todo.category" />
-    <input type="text" name="todo.desc" [(ngModel)]="todo.desc" />
-    <input type="checkbox" name="todo.done" [(ngModel)]="todo.done" />
-    <input type="checkbox" name="todo.updating" [(ngModel)]="todo.updating" />
-    <input type="text" name="todo.details" [(ngModel)]="todo.details" />
-    <button type="submit">Soumettre</button>
-  </form>
+</div>
+<div class="card">
+  Hello HERE TODO DONE
+</div>
 </ul>
+

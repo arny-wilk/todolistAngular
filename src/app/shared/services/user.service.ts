@@ -32,12 +32,12 @@ export class UserService {
     return this._http.delete(this._baseUrl + `/${user.id}`);
   }
 
-  public findTodosByUser(user: User) {
-    return this._http.get(this._baseUrl + `/${user.id}/${user.todos.length}`);
+  public findTodosByCategory(user: User) {
+    return this._http.get(this._baseUrl + `/${user.id}/${window.crypto.randomUUID()}`);
   }
 
-  public findTodoByUser(user: User, id: string) {
-    return this._http.get(this._baseUrl + `/${user.id}` + `?todos=${id}`);
+  public findTodoByComplete(user: User) {
+    return this._http.get(this._baseUrl + `/${user.id}` + `?done=${true}`);
   }
 
   public createTodo(user: User) {
