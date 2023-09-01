@@ -1,3 +1,13 @@
+<!-- MEMO POUR PLUS TARD -->
+<!-- <button (click)="todo.updating = !todo.updating" > {{ todo.updating ? "Enregistrer" : "Modifier" }} </button>
+<div *ngif="todo.updating === true">
+<input
+   type="text"
+  name="todo"
+  [(ngmodel)]="todo.desc"
+/>
+</div> -->
+
 <h1>Liste des utilisateurs</h1>
 <form (submit)="createUser()">
   <input
@@ -24,20 +34,104 @@
   <button type="submit">Go!</button>
 </form>
 
+
+
 <ul *ngFor="let user of users">
-  <li>{{ user.firstname }}</li>
-  <li>{{ user.lastname}}</li>
-  <li>{{ user.email}}</li>
-  <button (click)="selected = user" (click)="show = !show">Modifier</button>
-  <button (click)="selected = user" (click)="deleteUser()" >Supprimer</button>
-</ul>
+  <li>Prenom: {{ user.firstname }}</li>
+  <li>Nom: {{ user.lastname }}</li>
+  <li>Mail: {{ user.email }}</li>
+  <button (click)="showTodo = !showTodo">
+    {{ showTodo ? "Cacher les taches" : " Montrer les taches" }}
+  </button>
+  <button (click)="selected = user" (click)="showUpdateUser = !showUpdateUser">
+    Modifier Utilisateur
+  </button>
+  <button (click)="selected = user" (click)="deleteUser()">
+    Supprimer Utilisateur
+  </button>
   
-  <ul *ngIf="show && selected">
-     <form (submit)="updateUser()" >
-        <input type="text" name="selected.firstname" [(ngModel)]="selected.firstname" />
-        <input type="text" name="selected.lastname" [(ngModel)]="selected.lastname" />
-        <input type="text" name="selected.email" [(ngModel)]="selected.email" />
-        <button type="submit">Soumettre</button>
-    </form>
+  <div *ngIf="showTodo" class="todos">
+
+    <ul *ngFor="let todo of user.todos">
+      <li>Categorie: {{ todo.category | uppercase }}</li>
+      <li>Description: {{ todo.desc | uppercase }}</li>
+      <li><input type="checkbox" name="todo.done" />Fait</li>
+      <li><input type="checkbox" name="todo.updating" />Mis à jour</li>
+      <li>
+        Description: <textarea>{{ todo.details }}</textarea>
+      </li>
     </ul>
-    
+    <button
+    (click)="(newTodo)"
+    (click)="selected = user"
+    (click)="show = !show"
+    >
+    Ajouter une Todo
+  </button>
+  <button
+  (click)="selectedTodos = user.todos"
+  (click)="selected = user"
+  (click)="showUpdateTodo = !showUpdateTodo"
+  >
+  Modifier la Todo
+</button>
+<button (click)="selected = user" (click)="deleteTodosUser()">
+  Supprimer toute la liste
+</button>
+</div>
+
+<div class="card">
+
+<ul *ngIf="show && selected && newTodo" class="todos form" >
+  <form (submit)="createTodoUser()">
+    <input type="text" name="newTodo.category" [(ngModel)]="newTodo.category" />
+    <input type="text" name="newTodo.desc" [(ngModel)]="newTodo.desc" />
+    <input type="checkbox" name="newTodo.done" [(ngModel)]="newTodo.done" />
+    <input
+      type="checkbox"
+      name="newTodo.updating"
+      [(ngModel)]="newTodo.updating"
+    />
+    <input
+      type="textarea"
+      name="newTodo.details"
+      [(ngModel)]="newTodo.details"
+    />
+    <button type="submit">Soumettre</button>
+  </form>
+</ul>
+
+
+<ul *ngIf="showUpdateTodo && selected && selectedTodos">
+  <form *ngFor="let todo of selectedTodos" (submit)="updateTodoUser()">
+    <input type="text" name="todo.category" [(ngModel)]="todo.category" />
+    <input type="text" name="todo.desc" [(ngModel)]="todo.desc" />
+    <input type="checkbox" name="todo.done" [(ngModel)]="todo.done" />
+    <input type="checkbox" name="todo.updating" [(ngModel)]="todo.updating" />
+    <input type="text" name="todo.details" [(ngModel)]="todo.details" />
+    <button type="submit">Soumettre</button>
+  </form>
+</ul>
+
+<ul *ngIf="showUpdateUser && selected">
+  <form (submit)="updateUser()">
+    <input
+      type="text"
+      name="selected.firstname"
+      [(ngModel)]="selected.firstname"
+    />
+    <input
+      type="text"
+      name="selected.lastname"
+      [(ngModel)]="selected.lastname"
+    />
+    <input type="text" name="selected.email" [(ngModel)]="selected.email" />
+    <button type="submit">Soumettre</button>
+  </form>
+</ul>
+</div>
+<div class="card">
+  Hello HERE TODO DONE
+</div>
+</ul>
+
